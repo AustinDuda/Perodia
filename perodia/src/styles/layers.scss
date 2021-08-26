@@ -1,0 +1,30 @@
+@import './variables';
+
+.panel {
+    padding: 1.2rem 2.4rem;
+    background: $light-background;
+}
+
+.panel-inputs {
+    display: flex;
+}
+
+label {
+    padding: 0.6rem;
+    
+    span {
+        display: block;
+        color: $body-copy;
+        font-size: 1.2rem;
+        font-family: $roboto;
+        margin-bottom: 0.6rem;
+    }
+
+    input {
+        border: none;
+        padding: 0.6rem;
+        color: $body-copy;
+        font-family: $roboto;
+        background: $dark-background;
+    }
+}
