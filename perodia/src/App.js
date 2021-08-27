@@ -16,13 +16,25 @@ function App() {
         visible: true,
         objects: [
             {
+                name: 'Rectangle One',
                 type: 'rect',
                 x: 48,
                 y: 48,
                 width: 240,
                 height: 240,
-                fill: 'blue'
-            }
+                fill: 'blue',
+                visible: true
+            },
+            {
+              name: 'Rectangle Two',
+              type: 'rect',
+              x: 96,
+              y: 48,
+              width: 24,
+              height: 24,
+              fill: 'orange',
+              visible: true
+          }
         ]
     },
     {
@@ -30,12 +42,14 @@ function App() {
       visible: true,
       objects: [
         {
+            name: 'Rectangle Three',
             type: 'rect',
             x: 48,
             y: 48,
             width: 48,
             height: 48,
-            fill: 'red'
+            fill: 'red',
+            visible: true
         }
       ]
     }

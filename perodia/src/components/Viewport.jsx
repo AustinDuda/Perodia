@@ -38,9 +38,10 @@ const Viewport = ({layerData, canvasOffset, setCanvasOffset, ...rest}) => {
         
 
         layerData.forEach((layer) => {
-            if (!layer.visible || layer.objects.length > 1) { return false };
+            if (!layer.visible || layer.objects.length < 1) { return false };
 
             layer.objects.forEach((object) => {
+                if (!object.visible) { return false };
                 drawRectangle(ctx, object.x - canvasOffset.x, object.y - canvasOffset.y, object.width, object.height, object.fill, false)
             });
         });
@@ -59,6 +60,7 @@ const Viewport = ({layerData, canvasOffset, setCanvasOffset, ...rest}) => {
         });
 
         if (clicked === true) {
+            
             setCanvasOffset({ 
                 x: canvasOffset.x + (mousePosition.x - newMouseX),
                 y: canvasOffset.y + (mousePosition.y - newMouseY)

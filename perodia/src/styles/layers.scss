@@ -1,6 +1,5 @@
 @import './variables';
 
-
 .panel-title {
     padding: 1.2rem;
     background: $light-background;
@@ -16,23 +15,86 @@
 
 .panel-layers {
     .layers {
-        height: 30rem;
-        padding: 0.6rem 1.2rem;
+        height: 23rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            width: 0.6rem;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $medium-background;;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background: $dark-background;
+        }
     
         .layer {
             display: flex;
-            padding: 0.6rem 0;
             align-items: center;
+            padding: 0.6rem 1.2rem;
+
+            &.expanded {
+                + .object-layers {
+                    overflow-y: auto;
+                    max-height: 12rem;
+                    overflow-x: hidden;
+                    padding: 0.6rem 1.2rem;
+                }
+            }
 
             > img {
                 margin-right: 1.2rem;
+            }
+        }
+
+        .toggle-objects {
+            cursor: pointer;
+        }
+
+        .object-layers {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1.2rem;
+            background: $dark-background;
+            transition: all 0.15s ease-in-out;
+
+            &::-webkit-scrollbar {
+                width: 0.6rem;
+            }
+    
+            &::-webkit-scrollbar-track {
+                background: $medium-background;;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background: $dark-background;
+            }
+
+            &[data-visible='false'] {
+                .object-layer {
+                    opacity: 0.5;
+                }
+            }
+
+            .object-layer {
+                display: flex;
+                opacity: 1;
+                align-items: center;
+                padding: 0.6rem 1.2rem;
+                transition: all 0.15s ease-in-out;
+
+                img {
+                    margin-right: 0.6rem;
+                }
             }
         }
     
         .layer-toggle {
             opacity: 0.5;
             margin-left: auto;
-            
             transition: all 0.15s ease-in-out;
         
             &[data-visible='true'] {
@@ -46,13 +108,15 @@
             color: $body-copy;
         }
     }
-
+    
+    
     button {
         border: none;
         cursor: pointer;
         background: none;
     }
 }
+
 label {
     padding: 0.6rem;
     
