@@ -1,14 +1,58 @@
 @import './variables';
 
-.panel {
-    padding: 1.2rem 2.4rem;
+
+.panel-title {
+    padding: 1.2rem;
     background: $light-background;
+}
+
+.panel-controls {
+    padding: 1.2rem;
 }
 
 .panel-inputs {
     display: flex;
 }
 
+.panel-layers {
+    .layers {
+        height: 30rem;
+        padding: 0.6rem 1.2rem;
+    
+        .layer {
+            display: flex;
+            padding: 0.6rem 0;
+            align-items: center;
+
+            > img {
+                margin-right: 1.2rem;
+            }
+        }
+    
+        .layer-toggle {
+            opacity: 0.5;
+            margin-left: auto;
+            
+            transition: all 0.15s ease-in-out;
+        
+            &[data-visible='true'] {
+                opacity: 1;
+            }
+        }
+
+        input {
+            border: none;
+            background: none;
+            color: $body-copy;
+        }
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+        background: none;
+    }
+}
 label {
     padding: 0.6rem;
     
@@ -28,3 +72,6 @@ label {
         background: $dark-background;
     }
 }
+
+
+

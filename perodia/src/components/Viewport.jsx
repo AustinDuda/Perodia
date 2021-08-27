@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { drawRectangle, drawText  } from '../utilities/Helpers.js'
 
-const Viewport = () => {
+const Viewport = ({layerData, canvasOffset, setCanvasOffset, ...rest}) => {
 
     const canvasRef = useRef();
     const [clicked, setClicked] = useState(false);
-    const [canvasOffset, setCanvasOffset] = useState({ x: 0, y: 0 });
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -15,21 +14,19 @@ const Viewport = () => {
         
         renderToCanvas(ctx);  
 
-        const mouseListener = (e) => mouseClickListener(e);
-        canvas.addEventListener('mouseup', mouseListener);
-        canvas.addEventListener('mousedown', mouseListener);
-        canvas.addEventListener('mouseleave', mouseListener);
-        canvas.addEventListener('mousemove', calcMousePosition);
-        
+        canvas.addEventListener('mouseup', mouseClickListener);
+        canvas.addEventListener('mousedown', mouseClickListener);
+        canvas.addEventListener('mouseleave', mouseClickListener);
+        canvas.addEventListener('mousemove', mouseMoveListener);
         
         return () => {
-            canvas.removeEventListener('mouseup', mouseListener);
-            canvas.removeEventListener('mousedown', mouseListener);
-            canvas.removeEventListener('mouseleave', mouseListener);
-            canvas.removeEventListener('mousemove', calcMousePosition);
+            canvas.removeEventListener('mouseup', mouseClickListener);
+            canvas.removeEventListener('mousedown', mouseClickListener);
+            canvas.removeEventListener('mouseleave', mouseClickListener);
+            canvas.removeEventListener('mousemove', mouseMoveListener);
             
         };
-    }, [mousePosition, clicked, canvasOffset]);
+    }, [mousePosition, clicked, canvasOffset, layerData]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const mouseClickListener = (e) => {
         e.type === 'mouseup' || e.type === 'mouseleave' ? setClicked(false) : setClicked(true);
@@ -38,12 +35,20 @@ const Viewport = () => {
     const renderToCanvas = (ctx) => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         drawRectangle(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, 'black', false);
-        drawRectangle(ctx, 60 - canvasOffset.x, 60 - canvasOffset.y, (ctx.canvas.width*2) - canvasOffset.x, (ctx.canvas.height*2) - canvasOffset.y, 'red', false);
-        drawRectangle(ctx, 120 - canvasOffset.x, 120 - canvasOffset.y, 40, 40, 'blue', false);
+        
+
+        layerData.forEach((layer) => {
+            if (!layer.visible || layer.objects.length > 1) { return false };
+
+            layer.objects.forEach((object) => {
+                drawRectangle(ctx, object.x - canvasOffset.x, object.y - canvasOffset.y, object.width, object.height, object.fill, false)
+            });
+        });
+
         drawText(ctx, 10, 20, mousePosition.x + ', ' + mousePosition.y, 'white', 10);
     }
 
-    const calcMousePosition = (e) => {
+    const mouseMoveListener = (e) => {
         const canvasBounds = canvasRef.current.getBoundingClientRect();
         const newMouseX = Math.round(e.clientX - canvasBounds.left);
         const newMouseY = Math.round(e.clientY - canvasBounds.top);
@@ -60,7 +65,6 @@ const Viewport = () => {
             });
         } 
     }
-
 
     return (
         <>
