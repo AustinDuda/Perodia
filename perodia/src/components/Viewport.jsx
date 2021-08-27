@@ -35,15 +35,17 @@ const Viewport = ({layerData, canvasOffset, setCanvasOffset, ...rest}) => {
     const renderToCanvas = (ctx) => {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         drawRectangle(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, 'black', false);
-        drawText(ctx, 10, 20, mousePosition.x + ', ' + mousePosition.y, 'white', 10);
+        
 
         layerData.forEach((layer) => {
             if (!layer.visible || layer.objects.length > 1) { return false };
 
             layer.objects.forEach((object) => {
                 drawRectangle(ctx, object.x - canvasOffset.x, object.y - canvasOffset.y, object.width, object.height, object.fill, false)
-            })
-        })
+            });
+        });
+
+        drawText(ctx, 10, 20, mousePosition.x + ', ' + mousePosition.y, 'white', 10);
     }
 
     const mouseMoveListener = (e) => {

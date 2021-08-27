@@ -17,10 +17,10 @@ function App() {
         objects: [
             {
                 type: 'rect',
-                x: 20,
-                y: 20,
-                width: 200,
-                height: 200,
+                x: 48,
+                y: 48,
+                width: 240,
+                height: 240,
                 fill: 'blue'
             }
         ]
@@ -31,10 +31,10 @@ function App() {
       objects: [
         {
             type: 'rect',
-            x: 50,
-            y: 50,
-            width: 50,
-            height: 50,
+            x: 48,
+            y: 48,
+            width: 48,
+            height: 48,
             fill: 'red'
         }
       ]
