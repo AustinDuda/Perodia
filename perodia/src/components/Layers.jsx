@@ -1,12 +1,9 @@
 import React from 'react';
+import Layer from './Layer';
 import '../styles/layers.scss'; 
-import { AXIS, LAYERPROPS } from '../utilities/Enums.js';
-
+import { AXIS } from '../utilities/Enums.js';
 import iconAlign from '../assets/images/icon-align.svg';
 import iconCreate from '../assets/images/icon-create.svg';
-import iconDelete from '../assets/images/icon-delete.svg';
-import iconLayers from '../assets/images/icon-layers.svg';
-import iconVisible from '../assets/images/icon-visible.svg';
 
 const Layers = ({setRoomWidth, setRoomHeight, roomWidth, roomHeight, layerData, setLayerData, canvasOffset, setCanvasOffset, ...rest}) => {
 
@@ -18,15 +15,6 @@ const Layers = ({setRoomWidth, setRoomHeight, roomWidth, roomHeight, layerData, 
 
         axis ? setRoomHeight(value) : setRoomWidth(value);
     }
-
-    /* Updates layer properties */
-    const updateLayerProperty = (index, property, value) => {
-        setLayerData(
-            layerData.map((item, i) => {
-                return i === index ? {...item, [property] : value} : item 
-            })
-        )
-    }
     
     /* Creates new layers */
     const createNewLayer = () => {
@@ -35,11 +23,6 @@ const Layers = ({setRoomWidth, setRoomHeight, roomWidth, roomHeight, layerData, 
             visible: true,
             objects: [{}]
         }]);
-    }
-
-    /* Delete layers */
-    const deleteLayer = (index) => {
-        setLayerData(layerData.filter((item, i) => i !== index));
     }
 
     const realignCanvas = () => {
@@ -54,18 +37,7 @@ const Layers = ({setRoomWidth, setRoomHeight, roomWidth, roomHeight, layerData, 
                 <div className='layers'>
                     {layerData.map((layer, index) => {
                         return (
-                            <div key={index} className='layer'>
-                                <img src={iconLayers} width="20" height="20" alt="Layer icon"/>
-                                <input value={layer.name} onChange={(e) => { updateLayerProperty(index, LAYERPROPS.NAME, e.target.value) }}></input>
-                                
-                                <button className="layer-toggle" data-visible={layer.visible} onClick={(e) => { updateLayerProperty(index, LAYERPROPS.VISIBLE, !layer.visible) }}>
-                                    <img src={iconVisible} width="21" height="16" alt="Toggle layer visibility"/>
-                                </button>
-                                
-                                <button className="layer-delete" onClick={(e) => { deleteLayer(index) }}>
-                                    <img src={iconDelete} width="16" height="16" alt="Delete layer"/>
-                                </button>
-                            </div>
+                            <Layer key={index} { ...{ layer, index, layerData, setLayerData}}/>
                         )
                     })}
                 </div>
