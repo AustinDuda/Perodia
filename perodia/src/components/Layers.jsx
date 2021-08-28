@@ -21,7 +21,7 @@ const Layers = ({setRoomWidth, setRoomHeight, roomWidth, roomHeight, layerData, 
         setLayerData(oldLayerData => [...oldLayerData, {
             name: 'Layer ' + (oldLayerData.length + 1),
             visible: true,
-            objects: [{}]
+            objects: []
         }]);
     }
 

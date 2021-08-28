@@ -44,16 +44,19 @@ const Layers = ({layer, index, layerData, setLayerData, ...rest}) => {
                     <img src={iconDelete} width="16" height="16" alt="Delete layer"/>
                 </button>
             </div>
-            <div className="object-layers" data-visible={layer.visible}>
-                {layer.objects.map((layer, i) => {
-                    return (
-                        <div key={i} className="object-layer">
-                            <img src={iconObjectShape} width="16" height="16" alt="Object shape"/>
-                            <p>{layer.name}</p>
-                        </div>
-                    )
-                })}
-            </div>
+            { layer.objects.length > 0 && (
+                <div className="object-layers" data-visible={layer.visible}>
+                    {layer.objects.map((object, i) => {
+                        return (
+                            <div key={i} className="object-layer">
+                                <img src={iconObjectShape} width="16" height="16" alt="Object shape"/>
+                                <p>{object.name}</p>
+                            </div>
+                        )
+                    })}
+                </div>
+            )}
+            
         </>
     )
 }
